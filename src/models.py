@@ -1,84 +1,125 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy import String, ForeignKey,CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Optional
 
 db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(60), unique=True, nullable=False)
-    firstname: Mapped[str] = mapped_column(String(60), unique=False, nullable=True)
-    lastname: Mapped[str] = mapped_column(String(60), unique=False, nullable=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
+    username: Mapped[str] = mapped_column(String(60), unique=True, nullable=False, index=True)
+    favorites: Mapped[list["Favorite"]] = relationship(back_populates="user")
 
 
     def serialize(self):
         return {
             "id": self.id,
-            "email": self.email,
-            # do not serialize the password, its a security breach
+            "username": self.username,
+            "favorites": [fav.serialize() for fav in self.favorites]
         }
 
-class Comment(db.Model):
-    __tablename__ = "comment"
+class People(db.Model):
+    __tablename__ = "people"
     id: Mapped[int] = mapped_column(primary_key=True)
-    comment_text: Mapped[str] = mapped_column(String(60), unique=False, nullable=True)
-    autor_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
+    name: Mapped[Optional[str]] = mapped_column(String(200))
+    url: Mapped[Optional[str]] = mapped_column(String(200))
+    favorites: Mapped[list["Favorite"]] = relationship(back_populates="people")
 
 
     def serialize(self):
         return {
             "id": self.id,
-            "autor": self.autor, #completar
-            # do not serialize the password, its a security breach
+            "name": self.name,
+            "url": self.url
         }
 
-class Post(db.Model):
-    __tablename__ = "post"
+class Planet(db.Model):
+    __tablename__ = "planet"
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-
+    name: Mapped[Optional[str]] = mapped_column(String(200))
+    url: Mapped[Optional[str]] = mapped_column(String(200))
+    favorites: Mapped[list["Favorite"]] = relationship(back_populates="planet")
 
 
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.autor, #completar
-            # do not serialize the password, its a security breach
+            "name": self.name,
+            "url": self.url
         }
 
-
-class Media(db.Model):
-    __tablename__ = "media"
+class Vehicle(db.Model):
+    __tablename__ = "vehicle"
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped[int] = mapped_column(unique=False, nullable=False) 
-    url: Mapped[str] = mapped_column(String(120), unique=False, nullable=False)
-    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
+    name: Mapped[Optional[str]] = mapped_column(String(200))
+    url: Mapped[Optional[str]] = mapped_column(String(200))
+    favorites: Mapped[list["Favorite"]] = relationship(back_populates="vehicle")
 
 
     def serialize(self):
         return {
             "id": self.id,
-            "type": self.type,
-            "url": self.url, #completar
-            "post": self.url, #representar el Post completo
-            # do not serialize the password, its a security breach
+            "name": self.name,
+            "url": self.url
         }
 
-class Follower(db.Model):
-    __tablename__ = "follower"
+
+class Favorite(db.Model):
+    __tablename__ = "favorite"
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_from_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    user_to_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user_id: Mapped[Optional[int]] = mapped_column(ForeignKey("user.id"), nullable=False)
+    people_id: Mapped[Optional[int]] = mapped_column(ForeignKey("people.id"), nullable=True)
+    planet_id: Mapped[Optional[int]] = mapped_column(ForeignKey("planet.id"), nullable=True)
+    vehicle_id: Mapped[Optional[int]] = mapped_column(ForeignKey("vehicle.id"), nullable=True)
+    
+    __table_args__ = (
+        CheckConstraint(
+            "(people_id IS NOT NULL)::int + "
+            "(planet_id IS NOT NULL)::int + "
+            "(vehicle_id IS NOT NULL)::int = 1",
+            name="check_only_one_fk_not_null"
+        ),
+    )
+    user: Mapped["User"] = relationship(back_populates="favorite")
+    people: Mapped[Optional["People"]] = relationship(back_populates="favorite")
+    planet: Mapped[Optional["Planet"]] = relationship(back_populates="favorite")
+    vehicle: Mapped[Optional["Vehicle"]] = relationship(back_populates="favorite")
+
+    def serialize(self):
+        return {
+             "id": self.id,
+            "user_id": self.user_id,
+            "favorite_type": self.get_type(),
+            "favorite_data": self.get_data()
+        }
     
 
-    def serialize(self):
-        return {
-            "user_from_id": self.user_from_id,
-            "user_to_id": self.user_to_id
-        }
+    def get_type(self) -> str:
+        if self.people_id is not None:
+            return "people"
+        elif self.planet_id is not None:
+            return "planet"
+        elif self.vehicle_id is not None:
+            return "vehicle"
+        return "unknown"
+
+    def get_data(self) -> Optional[dict]:
+        if self.people:
+            return self.people.serialize()
+        if self.planet:
+            return self.planet.serialize()
+        if self.vehicle:
+            return self.vehicle.serialize()
+        return None
+
+    def get_element_id(self) -> Optional[int]:
+        if self.people_id is not None:
+            return self.people_id
+        elif self.planet_id is not None:
+            return self.planet_id
+        elif self.vehicle_id is not None:
+            return self.vehicle_id
+        return None
+    
 
