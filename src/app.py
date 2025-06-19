@@ -34,10 +34,10 @@ def handle_invalid_usage(error):
 def handle_hello():
      links_html=""
      return """
-        <div style="width:800px;background-color:#"""+bg_color+""";background-image: linear-gradient(#"""+bg_color+""", white);color:#"""+fg_color+"""; text-align: center; margin:50px auto; border-radius: 25px;padding:20px auto;">
+        <div style="width:800px;background-color:#"""+bg_color+""";background-image: linear-gradient(#"""+bg_color+""", white);color:#"""+fg_color+"""; text-align: center; margin:50px auto; border-radius: 25px;padding:20px auto;font-family: Monaco, monospace;font-size:16px;">
         <img style="max-height: 80px;margin:50px auto;" src='"""+image_url+"""' />
         <h2>Default Endpoint</h2>
-        <p style="font-size:24px;">APP PATH </p><script>document.write('<input style="margin:0px 20px 100px 20px; border-radius: 15px;padding:20px; width: 600px;font-size:16px;background:honeydew;" type="text" value="'+window.location.href+'" />');</script></div>"""
+        <p style="font-size:24px;">APP PATH </p><script>document.write('<input style="margin:0px 20px 100px 20px; border-radius: 15px;padding:20px; width: 600px;font-size:14px;font-family: Monaco, monospace;background:honeydew;" type="text" value="'+window.location.href+'" />');</script></div>"""
     #response_body = {
     ##    "msg": "Hello, this is your GET /user response "
     #}
