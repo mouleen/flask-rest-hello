@@ -8,7 +8,8 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User, People, Planet, Vehicle, Favorite
+import json
 #from models import Person
 
 app = Flask(__name__)
@@ -31,10 +32,23 @@ setup_admin(app)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+
+
+def get_http_code(body):
+    if not body:
+        return 400
+    else:
+        return 200
+
+
+
 # generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
+
+
+## Users 
 
 @app.route('/user', methods=['GET'])
 def handle_hello():
@@ -44,6 +58,124 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@app.route('/users', methods=['GET'])
+def handle_get_users():
+    users=User.query.all()
+    if len(users) < 1: 
+        return jsonify({"msg":"No se encontraron usuarios"
+                        }),404
+    serialized_users=list(map(lambda x:x.serialize(),users))
+    return serialized_users,200
+    
+@app.route('/user',methods=['POST'])
+def handle_create_user():
+    body=json.loads(request.data)
+    new_user=User(
+        username = body['username'],
+        email= body['email'],
+        password= body['password']
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"msg":"Usuario Creado"}),200
+
+@app.route('/user/<int:id>', methods=['GET'])
+def handle_get_user(id):
+    # this is how you can use the Family datastructure by calling its methods
+    response_body = User.get_user(id)
+    return jsonify(response_body),get_http_code(response_body)
+
+
+## People
+
+@app.route('/people', methods=['GET'])
+def handle_get_people():
+    people=People.query.all()
+    if len(people) < 1: 
+        return jsonify({"msg":"No se encontraron Personajes"
+                        }),404
+    serialized_people=list(map(lambda x:x.serialize(),people))
+    return serialized_people,200
+
+@app.route('/people',methods=['POST'])
+def handle_create_people():
+    body=json.loads(request.data)
+    new_people=People(
+        name = body['name'],
+        url= body['url'],
+    )
+    db.session.add(new_people)
+    db.session.commit()
+    return jsonify({"msg":"Nuevo Personaje Creado"}),200
+
+
+
+## Planets
+
+@app.route('/planets', methods=['GET'])
+def handle_get_planets():
+    planets=Planet.query.all()
+    if len(planets) < 1: 
+        return jsonify({"msg":"No se encontraron Planetas"
+                        }),404
+    serialized_planets=list(map(lambda x:x.serialize(),planets))
+    return serialized_planets,200
+
+@app.route('/planet',methods=['POST'])
+def handle_create_planet():
+    body=json.loads(request.data)
+    new_planet=Planet(
+        name = body['name'],
+        url= body['url'],
+    )
+    db.session.add(new_planet)
+    db.session.commit()
+    return jsonify({"msg":"Nuevo Planeta Creado"}),200
+
+## Vehicles 
+
+@app.route('/vehicles', methods=['GET'])
+def handle_get_vehicles():
+    vehicles=Vehicle.query.all()
+    if len(vehicles) < 1: 
+        return jsonify({"msg":"No se encontraron Vehiculos"
+                        }),404
+    serialized_vehicles=list(map(lambda x:x.serialize(),vehicles))
+    return serialized_vehicles,200
+
+@app.route('/vehicle',methods=['POST'])
+def handle_create_vehicle():
+    body=json.loads(request.data)
+    new_vehicle=Vehicle(
+        name = body['name'],
+        url= body['url'],
+    )
+    db.session.add(new_vehicle)
+    db.session.commit()
+    return jsonify({"msg":"Nuevo Planeta Creado"}),200
+
+## Favorites
+
+@app.route('/favorites', methods=['GET'])
+def handle_get_favorite():
+    favorites=Favorite.query.all()
+    if len(favorites) < 1: 
+        return jsonify({"msg":"No se encontraron Favoritos"
+                        }),404
+    serialized_favorite=list(map(lambda x:x.serialize(),favorites))
+    return serialized_favorite,200
+
+@app.route('/favorite',methods=['POST'])
+def handle_create_favorite():
+    body=json.loads(request.data)
+    new_favorite=Favorite(
+        name = body['name'],
+        url= body['url'],
+    )
+    db.session.add(new_favorite)
+    db.session.commit()
+    return jsonify({"msg":"Nuevo Favorito Creado"}),200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

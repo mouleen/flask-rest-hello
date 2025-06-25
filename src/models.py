@@ -9,13 +9,18 @@ class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(60), unique=True, nullable=False, index=True)
+    email: Mapped[str] = mapped_column(String(140), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(140), nullable=False)
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="user")
 
+    def get_user(self, id): 
+        return list(filter(lambda x: x["id"] == id, self._id))
 
     def serialize(self):
         return {
             "id": self.id,
             "username": self.username,
+            "email": self.email,
             "favorites": [fav.serialize() for fav in self.favorites]
         }
 
@@ -81,10 +86,10 @@ class Favorite(db.Model):
             name="check_only_one_fk_not_null"
         ),
     )
-    user: Mapped["User"] = relationship(back_populates="favorite")
-    people: Mapped[Optional["People"]] = relationship(back_populates="favorite")
-    planet: Mapped[Optional["Planet"]] = relationship(back_populates="favorite")
-    vehicle: Mapped[Optional["Vehicle"]] = relationship(back_populates="favorite")
+    user: Mapped["User"] = relationship(back_populates="favorites")
+    people: Mapped[Optional["People"]] = relationship(back_populates="favorites")
+    planet: Mapped[Optional["Planet"]] = relationship(back_populates="favorites")
+    vehicle: Mapped[Optional["Vehicle"]] = relationship(back_populates="favorites")
 
     def serialize(self):
         return {
