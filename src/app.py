@@ -19,7 +19,7 @@ db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/example2.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 MIGRATE = Migrate(app, db)
@@ -81,8 +81,8 @@ def handle_create_user():
     return jsonify({"msg":"Usuario Creado"}),200
 
 @app.route('/user/<int:id>', methods=['GET'])
+# Obtener usuario por ID
 def handle_get_user(id):
-    # 
     try:
         user=User.query.get(id)
     except Exception as e:
@@ -95,7 +95,26 @@ def handle_get_user(id):
         serialized_user=user.serialize()
         return serialized_user,200
 
-    
+@app.route('/user/<int:id>',methods=['DELETE'])
+# Eliminar usuario por ID
+def handle_delete_user(id):
+    try:
+        user=User.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el usuario"}),500
+    #finally: # Corre siempre
+    else:
+        if user is None: 
+            return jsonify({"msg":"No se encontro el usuario"}),404
+        try:
+            db.session.delete(user)
+            db.session.commit()
+        except Exception as e:
+            # Logear algo aca
+            return jsonify({"msg":"Excepcion borrando el usuario"}),500
+        else:
+            return jsonify({"msg":"Usuario eliminado con exito"}),200
 
 
 ## People
@@ -119,6 +138,7 @@ def handle_create_people():
     db.session.add(new_people)
     db.session.commit()
     return jsonify({"msg":"Nuevo Personaje Creado"}),200
+
 
 
 
