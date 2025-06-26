@@ -82,9 +82,20 @@ def handle_create_user():
 
 @app.route('/user/<int:id>', methods=['GET'])
 def handle_get_user(id):
-    # this is how you can use the Family datastructure by calling its methods
-    response_body = User.get_user(id)
-    return jsonify(response_body),get_http_code(response_body)
+    # 
+    try:
+        user=User.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el usuario"}),500
+    #finally: # Corre siempre
+    else:
+        if user is None: 
+            return jsonify({"msg":"No se encontro el usuario"}),404
+        serialized_user=user.serialize()
+        return serialized_user,200
+
+    
 
 
 ## People

@@ -13,8 +13,6 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(String(140), nullable=False)
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="user")
 
-    def get_user(self, id): 
-        return list(filter(lambda x: x["id"] == id, self._id))
 
     def serialize(self):
         return {
