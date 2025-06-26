@@ -120,7 +120,7 @@ def handle_delete_user(id):
 ## People
 
 @app.route('/people', methods=['GET'])
-def handle_get_people():
+def handle_get_people_all():
     people=People.query.all()
     if len(people) < 1: 
         return jsonify({"msg":"No se encontraron Personajes"
@@ -132,13 +132,47 @@ def handle_get_people():
 def handle_create_people():
     body=json.loads(request.data)
     new_people=People(
-        name = body['name'],
-        url= body['url'],
+        name = body['name']
     )
     db.session.add(new_people)
     db.session.commit()
     return jsonify({"msg":"Nuevo Personaje Creado"}),200
 
+@app.route('/people/<int:id>', methods=['GET'])
+# Obtener personaje por ID
+def handle_get_people(id):
+    try:
+        people=People.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Personaje"}),500
+    #finally: # Corre siempre
+    else:
+        if people is None: 
+            return jsonify({"msg":"No se encontro el Personaje"}),404
+        serialized_people=people.serialize()
+        return serialized_people,200
+
+@app.route('/people/<int:id>',methods=['DELETE'])
+# Eliminar personaje por ID
+def handle_delete_people(id):
+    try:
+        people=People.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Personaje"}),500
+    #finally: # Corre siempre
+    else:
+        if people is None: 
+            return jsonify({"msg":"No se encontro el Personaje"}),404
+        try:
+            db.session.delete(people)
+            db.session.commit()
+        except Exception as e:
+            # Logear algo aca
+            return jsonify({"msg":"Excepcion borrando el Personaje"}),500
+        else:
+            return jsonify({"msg":"Personaje eliminado con exito"}),200
 
 
 
@@ -157,12 +191,48 @@ def handle_get_planets():
 def handle_create_planet():
     body=json.loads(request.data)
     new_planet=Planet(
-        name = body['name'],
-        url= body['url'],
+        name = body['name']
     )
     db.session.add(new_planet)
     db.session.commit()
     return jsonify({"msg":"Nuevo Planeta Creado"}),200
+
+@app.route('/planet/<int:id>', methods=['GET'])
+# Obtener planeta por ID
+def handle_get_planet(id):
+    try:
+        planet=Planet.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Planeta"}),500
+    #finally: # Corre siempre
+    else:
+        if planet is None: 
+            return jsonify({"msg":"No se encontro el Planeta"}),404
+        serialized_planet=planet.serialize()
+        return serialized_planet,200
+
+@app.route('/planet/<int:id>',methods=['DELETE'])
+# Eliminar planeta por ID
+def handle_delete_planet(id):
+    try:
+        planet=Planet.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Planeta"}),500
+    #finally: # Corre siempre
+    else:
+        if planet is None: 
+            return jsonify({"msg":"No se encontro el Planeta"}),404
+        try:
+            db.session.delete(planet)
+            db.session.commit()
+        except Exception as e:
+            # Logear algo aca
+            return jsonify({"msg":"Excepcion borrando el Planeta"}),500
+        else:
+            return jsonify({"msg":"Planeta eliminado con exito"}),200
+
 
 ## Vehicles 
 
@@ -179,12 +249,46 @@ def handle_get_vehicles():
 def handle_create_vehicle():
     body=json.loads(request.data)
     new_vehicle=Vehicle(
-        name = body['name'],
-        url= body['url'],
+        name = body['name']
     )
     db.session.add(new_vehicle)
     db.session.commit()
-    return jsonify({"msg":"Nuevo Planeta Creado"}),200
+    return jsonify({"msg":"Nuevo Vehiculo Creado"}),200
+@app.route('/vehicle/<int:id>', methods=['GET'])
+# Obtener personaje por ID
+def handle_get_vehicle(id):
+    try:
+        vehicle=Vehicle.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Vehiculo"}),500
+    #finally: # Corre siempre
+    else:
+        if vehicle is None: 
+            return jsonify({"msg":"No se encontro el Vehiculo"}),404
+        serialized_vehicle=vehicle.serialize()
+        return serialized_vehicle,200
+
+@app.route('/vehicle/<int:id>',methods=['DELETE'])
+# Eliminar personaje por ID
+def handle_delete_vehicle(id):
+    try:
+        vehicle=Vehicle.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Vehiculo"}),500
+    #finally: # Corre siempre
+    else:
+        if vehicle is None: 
+            return jsonify({"msg":"No se encontro el Vehiculo"}),404
+        try:
+            db.session.delete(vehicle)
+            db.session.commit()
+        except Exception as e:
+            # Logear algo aca
+            return jsonify({"msg":"Excepcion borrando el Vehiculo"}),500
+        else:
+            return jsonify({"msg":"Vehiculo eliminado con exito"}),200
 
 ## Favorites
 

@@ -26,7 +26,6 @@ class People(db.Model):
     __tablename__ = "people"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[Optional[str]] = mapped_column(String(200))
-    url: Mapped[Optional[str]] = mapped_column(String(200))
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="people")
 
 
@@ -34,14 +33,13 @@ class People(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "url": self.url
+            "url": "/people/"+str(self.id)
         }
 
 class Planet(db.Model):
     __tablename__ = "planet"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[Optional[str]] = mapped_column(String(200))
-    url: Mapped[Optional[str]] = mapped_column(String(200))
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="planet")
 
 
@@ -49,14 +47,13 @@ class Planet(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "url": self.url
+            "url": "/planet/"+str(self.id)
         }
 
 class Vehicle(db.Model):
     __tablename__ = "vehicle"
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[Optional[str]] = mapped_column(String(200))
-    url: Mapped[Optional[str]] = mapped_column(String(200))
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="vehicle")
 
 
@@ -64,7 +61,7 @@ class Vehicle(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "url": self.url
+            "url": "/vehicle/"+str(self.id)
         }
 
 
