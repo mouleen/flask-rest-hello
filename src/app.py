@@ -60,15 +60,17 @@ def handle_hello():
     return jsonify(response_body), 200
 
 @app.route('/users', methods=['GET'])
+# Listar Usuarios
 def handle_get_users():
     users=User.query.all()
     if len(users) < 1: 
-        return jsonify({"msg":"No se encontraron usuarios"
-                        }),404
+        return jsonify({"msg":"No se encontraron usuarios"}),404
+    
     serialized_users=list(map(lambda x:x.serialize(),users))
     return serialized_users,200
     
 @app.route('/user',methods=['POST'])
+# Crear Usuario
 def handle_create_user():
     body=json.loads(request.data)
     new_user=User(
@@ -81,7 +83,7 @@ def handle_create_user():
     return jsonify({"msg":"Usuario Creado"}),200
 
 @app.route('/user/<int:id>', methods=['GET'])
-# Obtener usuario por ID
+# Obtener Usuario por ID
 def handle_get_user(id):
     try:
         user=User.query.get(id)
@@ -96,7 +98,7 @@ def handle_get_user(id):
         return serialized_user,200
 
 @app.route('/user/<int:id>',methods=['DELETE'])
-# Eliminar usuario por ID
+# Eliminar Usuario por ID
 def handle_delete_user(id):
     try:
         user=User.query.get(id)
@@ -120,15 +122,17 @@ def handle_delete_user(id):
 ## People
 
 @app.route('/people', methods=['GET'])
+# Listar personajes
 def handle_get_people_all():
     people=People.query.all()
     if len(people) < 1: 
-        return jsonify({"msg":"No se encontraron Personajes"
-                        }),404
+        return jsonify({"msg":"No se encontraron Personajes"}),404
+    
     serialized_people=list(map(lambda x:x.serialize(),people))
     return serialized_people,200
 
 @app.route('/people',methods=['POST'])
+# Crear personaje
 def handle_create_people():
     body=json.loads(request.data)
     new_people=People(
@@ -179,15 +183,17 @@ def handle_delete_people(id):
 ## Planets
 
 @app.route('/planets', methods=['GET'])
+# Listar Planetas
 def handle_get_planets():
     planets=Planet.query.all()
     if len(planets) < 1: 
-        return jsonify({"msg":"No se encontraron Planetas"
-                        }),404
+        return jsonify({"msg":"No se encontraron Planetas"}),404
+    
     serialized_planets=list(map(lambda x:x.serialize(),planets))
     return serialized_planets,200
 
 @app.route('/planet',methods=['POST'])
+# Crear Planeta
 def handle_create_planet():
     body=json.loads(request.data)
     new_planet=Planet(
@@ -237,15 +243,17 @@ def handle_delete_planet(id):
 ## Vehicles 
 
 @app.route('/vehicles', methods=['GET'])
-def handle_get_vehicles():
+# Listar Vehiculos
+def handle_get_vehicles():  
     vehicles=Vehicle.query.all()
     if len(vehicles) < 1: 
-        return jsonify({"msg":"No se encontraron Vehiculos"
-                        }),404
+        return jsonify({"msg":"No se encontraron Vehiculos"}),404
+    
     serialized_vehicles=list(map(lambda x:x.serialize(),vehicles))
     return serialized_vehicles,200
 
 @app.route('/vehicle',methods=['POST'])
+# Crear Vehiculos
 def handle_create_vehicle():
     body=json.loads(request.data)
     new_vehicle=Vehicle(
@@ -254,6 +262,7 @@ def handle_create_vehicle():
     db.session.add(new_vehicle)
     db.session.commit()
     return jsonify({"msg":"Nuevo Vehiculo Creado"}),200
+
 @app.route('/vehicle/<int:id>', methods=['GET'])
 # Obtener personaje por ID
 def handle_get_vehicle(id):
@@ -270,7 +279,7 @@ def handle_get_vehicle(id):
         return serialized_vehicle,200
 
 @app.route('/vehicle/<int:id>',methods=['DELETE'])
-# Eliminar personaje por ID
+# Eliminar Vehiculo por ID
 def handle_delete_vehicle(id):
     try:
         vehicle=Vehicle.query.get(id)
@@ -293,7 +302,8 @@ def handle_delete_vehicle(id):
 ## Favorites
 
 @app.route('/favorites', methods=['GET'])
-def handle_get_favorite():
+# Listar Favoritos
+def handle_get_favorite_all():
     favorites=Favorite.query.all()
     if len(favorites) < 1: 
         return jsonify({"msg":"No se encontraron Favoritos"
@@ -302,15 +312,65 @@ def handle_get_favorite():
     return serialized_favorite,200
 
 @app.route('/favorite',methods=['POST'])
+# Crear Favoritos
 def handle_create_favorite():
     body=json.loads(request.data)
+    if body is None or body['user_id'] is None or body['type'] is None or body['id'] is None: 
+        return jsonify({"msg":"No se especificaron datos para la acción"}),400
+    
     new_favorite=Favorite(
-        name = body['name'],
-        url= body['url'],
+        user_id = body['user_id']
     )
+    match body['type']:
+        case "planet":
+            new_favorite.planet_id=body['id']
+        case "people":
+            new_favorite.people_id=body['id']
+        case "vehicle":
+            new_favorite.vehicle_id=body['id']
+        case _:  # Default case (like 'else')
+            return jsonify({"msg":"Debe indicar un is para poder crear el Favorito"}),400
+
     db.session.add(new_favorite)
     db.session.commit()
     return jsonify({"msg":"Nuevo Favorito Creado"}),200
+
+@app.route('/favorite/<int:id>', methods=['GET'])
+# Obtener Favorito por ID
+def handle_get_favorite(id):
+    try:
+        favorite=Favorite.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Favorito"}),500
+    #finally: # Corre siempre
+    else:
+        if favorite is None: 
+            return jsonify({"msg":"No se encontro el Favorito"}),404
+        serialized_favorite=favorite.serialize()
+        return serialized_favorite,200
+
+@app.route('/favorite/<int:id>',methods=['DELETE'])
+# Eliminar Favorito por ID
+def handle_delete_favorite(id):
+    try:
+        favorite=Favorite.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando el Favorito"}),500
+    #finally: # Corre siempre
+    else:
+        if favorite is None: 
+            return jsonify({"msg":"No se encontro el Favorito"}),404
+        try:
+            db.session.delete(favorite)
+            db.session.commit()
+        except Exception as e:
+            # Logear algo aca
+            return jsonify({"msg":"Excepcion borrando el Favorito"}),500
+        else:
+            return jsonify({"msg":"Favorito eliminado con exito"}),200
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

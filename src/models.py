@@ -64,7 +64,6 @@ class Vehicle(db.Model):
             "url": "/vehicle/"+str(self.id)
         }
 
-
 class Favorite(db.Model):
     __tablename__ = "favorite"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -93,7 +92,6 @@ class Favorite(db.Model):
             "favorite_type": self.get_type(),
             "favorite_data": self.get_data()
         }
-    
 
     def get_type(self) -> str:
         if self.people_id is not None:
