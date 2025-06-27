@@ -25,7 +25,7 @@ class User(db.Model):
 class People(db.Model):
     __tablename__ = "people"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[Optional[str]] = mapped_column(String(200))
+    name: Mapped[Optional[str]] = mapped_column(String(200), index=True)
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="people")
 
 
@@ -39,7 +39,7 @@ class People(db.Model):
 class Planet(db.Model):
     __tablename__ = "planet"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[Optional[str]] = mapped_column(String(200))
+    name: Mapped[Optional[str]] = mapped_column(String(200), index=True)
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="planet")
 
 
@@ -53,7 +53,7 @@ class Planet(db.Model):
 class Vehicle(db.Model):
     __tablename__ = "vehicle"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[Optional[str]] = mapped_column(String(200))
+    name: Mapped[Optional[str]] = mapped_column(String(200), index=True)
     favorites: Mapped[list["Favorite"]] = relationship(back_populates="vehicle")
 
 

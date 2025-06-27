@@ -12,6 +12,7 @@ from models import db, User, People, Planet, Vehicle, Favorite
 import json
 #from models import Person
 
+MAX_APP_ENTITIES=100000
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
@@ -78,13 +79,21 @@ def handle_create_user():
         email= body['email'],
         password= body['password']
     )
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"msg":"Usuario Creado"}),200
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion craendo el usuario, verifique los datos enviados"}),500
+    else:
+        return jsonify({"msg":"Usuario Creado"}),200
 
 @app.route('/user/<int:id>', methods=['GET'])
 # Obtener Usuario por ID
 def handle_get_user(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de usuario valido"}),400
+
     try:
         user=User.query.get(id)
     except Exception as e:
@@ -97,9 +106,34 @@ def handle_get_user(id):
         serialized_user=user.serialize()
         return serialized_user,200
 
+@app.route('/users/favorites', methods=['GET'])
+# Obtener Usuario por ID
+def handle_get_user_favorites():
+    body=json.loads(request.data)
+    if body['id'] is None:
+        return jsonify({"msg":"Debe especificar el id de usuario"}),400    
+    id=body['id']
+    if not id.isdigit() or int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de usuario valido"}),400 
+    try:
+        user=User.query.get(id)
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion buscando los favoritos del usuario"}),500
+    #finally: # Corre siempre
+    else:
+        if user is None: 
+            return jsonify({"msg":"No se encontraron favoritos para el usuario"}),404
+        serialized_user=user.serialize()
+        return serialized_user['favorites'],200
+
+
 @app.route('/user/<int:id>',methods=['DELETE'])
 # Eliminar Usuario por ID
 def handle_delete_user(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de usuario valido"}),400
+     
     try:
         user=User.query.get(id)
     except Exception as e:
@@ -138,13 +172,29 @@ def handle_create_people():
     new_people=People(
         name = body['name']
     )
-    db.session.add(new_people)
-    db.session.commit()
-    return jsonify({"msg":"Nuevo Personaje Creado"}),200
+    people_name=body['name']
+    try:
+        people_exists=db.session.execute(db.select(People).filter_by(name=people_name)).first()
+    except Exception as e:
+        return jsonify({"msg":"Excepcion buscado existencias de Personaje"})
+    else:
+        if people_exists is None:
+            try:
+                db.session.add(new_people)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({"msg":"Excepcion creando Personaje"})
+            else:
+                return jsonify({"msg":"Nuevo Personaje Creado"}),200
+        else:
+            return jsonify({"msg":"Ya existe un Personaje con ese nombre"}),200
+
 
 @app.route('/people/<int:id>', methods=['GET'])
 # Obtener personaje por ID
 def handle_get_people(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de personaje valido"}),400
     try:
         people=People.query.get(id)
     except Exception as e:
@@ -160,6 +210,8 @@ def handle_get_people(id):
 @app.route('/people/<int:id>',methods=['DELETE'])
 # Eliminar personaje por ID
 def handle_delete_people(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de personaje valido"}),400
     try:
         people=People.query.get(id)
     except Exception as e:
@@ -199,6 +251,26 @@ def handle_create_planet():
     new_planet=Planet(
         name = body['name']
     )
+    planet_name=body['name']
+    try:
+        planet_exists=db.session.execute(db.select(Planet).filter_by(name=planet_name)).first()
+    except Exception as e:
+        return jsonify({"msg":"Excepcion buscado existencias del Planeta"})
+    else:
+        if planet_exists is None:
+            try:
+                db.session.add(new_planet)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({"msg":"Excepcion creando Planeta"})
+            else:
+                return jsonify({"msg":"Nuevo Planeta Creado"}),200
+        else:
+            return jsonify({"msg":"Ya existe un Planeta con ese nombre"}),200
+
+
+
+
     db.session.add(new_planet)
     db.session.commit()
     return jsonify({"msg":"Nuevo Planeta Creado"}),200
@@ -206,6 +278,9 @@ def handle_create_planet():
 @app.route('/planet/<int:id>', methods=['GET'])
 # Obtener planeta por ID
 def handle_get_planet(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de planeta valido"}),400
+    
     try:
         planet=Planet.query.get(id)
     except Exception as e:
@@ -221,6 +296,9 @@ def handle_get_planet(id):
 @app.route('/planet/<int:id>',methods=['DELETE'])
 # Eliminar planeta por ID
 def handle_delete_planet(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de planeta valido"}),400
+    
     try:
         planet=Planet.query.get(id)
     except Exception as e:
@@ -259,13 +337,29 @@ def handle_create_vehicle():
     new_vehicle=Vehicle(
         name = body['name']
     )
-    db.session.add(new_vehicle)
-    db.session.commit()
-    return jsonify({"msg":"Nuevo Vehiculo Creado"}),200
+    vehicle_name=body['name']
+    try:
+        vehicle_exists=db.session.execute(db.select(Vehicle).filter_by(name=vehicle_name)).first()
+    except Exception as e:
+        return jsonify({"msg":"Excepcion buscado existencias de Vehiculo"})
+    else:
+        if vehicle_exists is None:
+            try:
+                db.session.add(new_vehicle)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({"msg":"Excepcion creando Vehiculo"})
+            else:
+                return jsonify({"msg":"Nuevo Vehiculo Creado"}),200
+        else:
+            return jsonify({"msg":"Ya existe un Vehiculo con ese nombre"}),200
 
 @app.route('/vehicle/<int:id>', methods=['GET'])
 # Obtener personaje por ID
 def handle_get_vehicle(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de vehiculo valido"}),400
+    
     try:
         vehicle=Vehicle.query.get(id)
     except Exception as e:
@@ -281,6 +375,9 @@ def handle_get_vehicle(id):
 @app.route('/vehicle/<int:id>',methods=['DELETE'])
 # Eliminar Vehiculo por ID
 def handle_delete_vehicle(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de vehiculo valido"}),400
+    
     try:
         vehicle=Vehicle.query.get(id)
     except Exception as e:
@@ -329,7 +426,7 @@ def handle_create_favorite():
         case "vehicle":
             new_favorite.vehicle_id=body['id']
         case _:  # Default case (like 'else')
-            return jsonify({"msg":"Debe indicar un is para poder crear el Favorito"}),400
+            return jsonify({"msg":"Debe indicar un id para poder crear el Favorito"}),400
 
     db.session.add(new_favorite)
     db.session.commit()
@@ -338,6 +435,8 @@ def handle_create_favorite():
 @app.route('/favorite/<int:id>', methods=['GET'])
 # Obtener Favorito por ID
 def handle_get_favorite(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de favorito valido"}),400
     try:
         favorite=Favorite.query.get(id)
     except Exception as e:
@@ -353,6 +452,9 @@ def handle_get_favorite(id):
 @app.route('/favorite/<int:id>',methods=['DELETE'])
 # Eliminar Favorito por ID
 def handle_delete_favorite(id):
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de favorito valido"}),400
+    
     try:
         favorite=Favorite.query.get(id)
     except Exception as e:
@@ -370,6 +472,97 @@ def handle_delete_favorite(id):
             return jsonify({"msg":"Excepcion borrando el Favorito"}),500
         else:
             return jsonify({"msg":"Favorito eliminado con exito"}),200
+
+
+@app.route('/favorite/<string:param_entity_type>/<int:param_entity_id>', methods=['POST'])
+# Crea Favorito de un Usuario 
+def handle_set_user_favorite(param_entity_type,param_entity_id):
+    body=json.loads(request.data)
+    if param_entity_type is None:
+        return jsonify({"msg":"Debe especificar el tipo para el favorito"}),400    
+    if param_entity_id is None:
+        return jsonify({"msg":"Debe especificar el id para el favorito"}),400    
+    id=param_entity_id
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id valido"}),400 
+    
+    if not body['user_id'].isdigit() or body['user_id'] is None or int(body['user_id']) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de usuario valido"}),400 
+
+    uid=body['user_id']
+    new_favorite=Favorite(
+        user_id = uid,
+    )
+    match param_entity_type:
+        case "planet":
+            new_favorite.planet_id=param_entity_id
+        case "people":
+            new_favorite.people_id=param_entity_id
+        case _:  # Default case (like 'else')
+            return jsonify({"msg":"Debe indicar un id para poder crear el Favorito"}),400
+
+
+    if param_entity_type == "planet" or param_entity_type == "people":
+            try:
+                match param_entity_type:
+                    case "planet":
+                        user_favorite = db.session.execute(db.select(Favorite).filter_by(user_id=uid,planet_id=param_entity_id)).first()
+                    case "people":
+                        user_favorite = db.session.execute(db.select(Favorite).filter_by(user_id=uid,people_id=param_entity_id)).first()
+                    case _:  # Default case (like 'else')
+                        return jsonify({"msg":f"Debe indicar un id para poder borrar el Favorito: {param_entity_type}"}),400        
+            except Exception as e:
+                # Logear algo aca
+                return jsonify({"msg":f"Excepcion creando el Favorito, verifique los datos enviados {e}"}),500
+            else:
+                if user_favorite is None:
+                    try:
+                        db.session.add(new_favorite)
+                        db.session.commit()
+                        return jsonify({"msg":"Nuevo Favorito de Planeta Creado"}),200
+                    except Exception as e:
+                        # Logear algo aca
+                        return jsonify({"msg":f"Excepcion creando el Favorito, verifique los datos enviados {e}"}),500
+                else:
+                        return jsonify({"msg":f"El Favorito que intenta crear ya existe"}),400
+
+
+@app.route('/favorite/<string:param_entity_type>/<int:param_entity_id>', methods=['DELETE'])
+# Borra Favorito de un Usuario 
+def handle_delete_user_favorite(param_entity_type,param_entity_id):
+    body=json.loads(request.data)
+    if param_entity_type is None:
+        return jsonify({"msg":"Debe especificar el tipo para el favorito"}),400    
+    if param_entity_id is None:
+        return jsonify({"msg":"Debe especificar el id para el favorito"}),400    
+    id=param_entity_id
+    if int(id) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id valido"}),400 
+    
+    if not body['user_id'].isdigit() or body['user_id'] is None or int(body['user_id']) > MAX_APP_ENTITIES:
+        return jsonify({"msg":"Debe especificar el id de usuario valido"}),400 
+    
+    uid=body['user_id']
+    try:
+        match param_entity_type:
+            case "planet":
+                user_favorite = db.session.execute(db.select(Favorite).filter_by(user_id=uid,planet_id=param_entity_id)).scalar_one()
+            case "people":
+                user_favorite = db.session.execute(db.select(Favorite).filter_by(user_id=uid,people_id=param_entity_id)).scalar_one()
+            case _:  # Default case (like 'else')
+                return jsonify({"msg":f"Debe indicar un id para poder borrar el Favorito: {param_entity_type}"}),400        
+    except Exception as e:
+        # Logear algo aca
+        return jsonify({"msg":"Excepcion eliminando el Favorito para el usuario especificado, verifique los datos y vuelva a intentarlo"}),500
+    else:
+        if not user_favorite is None:
+            db.session.delete(user_favorite)
+            db.session.commit()
+            return jsonify({"msg":"Favorito eliminado con exito"}),200
+        else:
+            return jsonify({"msg":"No se pudo persistir el Favorito para el usuario especificado"}),500
+    
+
 
 
 # this only runs if `$ python src/app.py` is executed
