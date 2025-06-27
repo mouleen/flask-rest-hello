@@ -1,0 +1,828 @@
+git statype: collection.insomnia.rest/5.0
+name: 4G
+meta:
+  id: wrk_fc935fa2bbb343e583cf4d8b6ccec85f
+  created: 1748906976807
+  modified: 1748906976807
+  description: ""
+collection:
+  - name: 4G Playground APIs
+    meta:
+      id: fld_77232b6e10164eb3b96d432f6e1c67cc
+      created: 1750175951506
+      modified: 1750944684496
+      sortKey: -1750175951506
+      description: ""
+  - name: 4G-StarWars
+    meta:
+      id: fld_386b601819384863a7335a88da79454c
+      created: 1750944665703
+      modified: 1750944665703
+      sortKey: -1750944665703
+      description: ""
+    children:
+      - url: "{{ _.url_starwars }}/user"
+        name: user_create
+        meta:
+          id: req_34bf1d62fe9f42cabeca98f0c597a56a
+          created: 1750860511938
+          modified: 1750950635449
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673830
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username":"berreta",
+            	"email":"el@masmas.berreta",
+            	"password":"riBer"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/users"
+        name: users_list
+        meta:
+          id: req_1074d945d9544deeb3249e9d6117f7c9
+          created: 1750861361824
+          modified: 1751032629323
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673805
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/user/4"
+        name: user_get
+        meta:
+          id: req_0f9515832e644bc1aa08f00c57554fe4
+          created: 1750944928580
+          modified: 1751041059049
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673780
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/user/1000000"
+        name: user_delete
+        meta:
+          id: req_93ccae8c4ffd4964b178359b1f4df6d5
+          created: 1750948539922
+          modified: 1751033996187
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673755
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/people"
+        name: people_create
+        meta:
+          id: req_ae36c32a0bf84e20970ad897c93ddb1d
+          created: 1750951295730
+          modified: 1750954116044
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673705
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name":"Luke Skywalker"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/people"
+        name: people_list
+        meta:
+          id: req_f23f63a29f3a4c0cb5f51e5257bba612
+          created: 1750952721997
+          modified: 1750952734188
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673680
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/people/4"
+        name: people_delete
+        meta:
+          id: req_aa45a6a2f57a4468a8e8fc7fa0857a7e
+          created: 1750952916436
+          modified: 1750972158547
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673645.625
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/people/3"
+        name: people_get
+        meta:
+          id: req_cd5f50c2ebc047d093113818052c26d4
+          created: 1750953254333
+          modified: 1750972140527
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673655
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/planet/3"
+        name: planet_delete
+        meta:
+          id: req_21f699242c7940d98139908f75864bc5
+          created: 1750953699331
+          modified: 1750954242064
+          isPrivate: false
+          description: ""
+          sortKey: -1750560316179
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/planet/6"
+        name: planet_get
+        meta:
+          id: req_6d364972f2444067af55d6058bc5217c
+          created: 1750953756700
+          modified: 1750954383977
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673642.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/planet"
+        name: planet_create
+        meta:
+          id: req_9787cbb0ad8b4116b780147632981ad2
+          created: 1750953785363
+          modified: 1751042700641
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673644.0625
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name":"Endorf"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/planets"
+        name: planet_list
+        meta:
+          id: req_a671dddbe9b14f939a4e2853b561d82b
+          created: 1750954156153
+          modified: 1750954176793
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673643.2812
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/vehicle"
+        name: vehicle_create
+        meta:
+          id: req_dcff74f862b64af2a7a427b3e956f69d
+          created: 1750954543716
+          modified: 1751042333143
+          isPrivate: false
+          description: ""
+          sortKey: -1750560316079
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name":"AT-ATe"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/vehicles"
+        name: vehicle_list
+        meta:
+          id: req_865cef94b1f540d6bd14681461b05a9d
+          created: 1750954748453
+          modified: 1750954762918
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315979
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/vehicle/4"
+        name: vehicle_get
+        meta:
+          id: req_75844fae9d5041eeaf8c4e0945b757f6
+          created: 1750954889982
+          modified: 1751034623739
+          isPrivate: false
+          description: ""
+          sortKey: -1750560316029
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/vehicle/3"
+        name: vehicle_delete
+        meta:
+          id: req_e404c6083ef745c9810c47f4e06ae3a9
+          created: 1750954924019
+          modified: 1750955003765
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315879
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite"
+        name: favorite_create
+        meta:
+          id: req_73f89c388b714e019e0dd9fbeb85cf5d
+          created: 1750968340425
+          modified: 1751036272856
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315779
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user_id":"2",
+            	"type":"planet",
+            	"planet_id":4
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite/1"
+        name: favorite_get
+        meta:
+          id: req_fa996b19440448a89a8ea85b092af8f2
+          created: 1750968360329
+          modified: 1750968441549
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315679
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorites"
+        name: favorite_list
+        meta:
+          id: req_e0100eb50ecb41ea89904407cac4bbf5
+          created: 1750968393343
+          modified: 1751032284708
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315579
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite/1"
+        name: favorite_delete
+        meta:
+          id: req_a32e062935024379a3cdcd8679af2950
+          created: 1750968411482
+          modified: 1751032292386
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315479
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/users/favorites"
+        name: users_favorites
+        meta:
+          id: req_63e94831e8294c3787cb8f8a0f08d43a
+          created: 1751032528374
+          modified: 1751034694504
+          isPrivate: false
+          description: ""
+          sortKey: -1750944673817.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"id":"2"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite/planet/7"
+        name: user_favorite_create
+        meta:
+          id: req_2aaa3cf8ad5a4338ab27f83d89ccd937
+          created: 1751036559095
+          modified: 1751041285846
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315729
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user_id":"4"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite/people/5"
+        name: user_favorite_create(people)
+        meta:
+          id: req_77c8151b0df544a4822b7233958a0c52
+          created: 1751037342311
+          modified: 1751040950762
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315704
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user_id":"4"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.url_starwars }}/favorite/people/5"
+        name: user_favorite_delete(people)
+        meta:
+          id: req_95aa36e56c6b4ade8fa65c72a9054ad8
+          created: 1751039653592
+          modified: 1751039668560
+          isPrivate: false
+          description: ""
+          sortKey: -1750560315379
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"user_id":"2"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.2.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 4G-Family
+    meta:
+      id: fld_165a2695e878445d9b2d7d3de73b77b0
+      created: 1750944704884
+      modified: 1750944704884
+      sortKey: -1750944704884
+      description: ""
+  - name: 4G-ToDoList
+    meta:
+      id: fld_9bdbd1b1cb034037b74e6b8b44fdd56b
+      created: 1750944777955
+      modified: 1750944777955
+      sortKey: -1750944777955
+      description: ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_8cd98710fc2e13c066f0c56e69342ab30bbd9940
+    created: 1748906976820
+    modified: 1751042881484
+  cookies:
+    - key: cs-search-params
+      domain: super-carnival-q7rjvgp4q5r269gj.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-02T23:31:09.630Z
+      lastAccessed: 2025-06-02T23:31:55.470Z
+      id: 664fbbdf-429d-46c2-bec2-c4a7a1e3bb89
+    - key: _gh_sess
+      value: N5ci1bbj%2FcdddOPBUwS7poDV0%2BUU8rPmQP8OPYS26RIFlva5dRneCXayK28ARgsjxIMbY3AB0kIkQLmpTsYZfmP%2BmH5ncIeEqrTZK2MTIOc%2F3NDX5s01X%2BQekPBIiTccQ85ZhMJeHsyqgU6Mu2FI3WyYHJdm2yg6SlhzS%2FXxIyKQWxJbTFDNrakxlHDH6GiLw053dR%2BHW4cmphGgC2y7FGX85ZZ%2FtNYpWNYHyXiA8oTqm%2BOMZbw%2FrYKSCKwHjXPpxQB4P6XXFJv4iRaC7coY9w%3D%3D--QspDqsudm2bnqjE8--mTo3vIOnAXRd%2BZVl%2F32kgA%3D%3D
+      domain: super-carnival-q7rjvgp4q5r269gj.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-02T23:31:09.633Z
+      lastAccessed: 2025-06-02T23:31:55.470Z
+      sameSite: lax
+      id: 85f487f1-108b-4d7a-9957-fc095a6ebc00
+    - key: .Tunnels.Relay.WebForwarding.Cookies
+      value: CfDJ8Cs4yarcs6pKkdu0hlKHsZtT6BW6nwpBr9Gx0E6jXh-_RS8iSjLaGGKf8rSKp2OMXER1WRmeQCXtRIfMaHIKgdZOXkqNk29-WBzmAFoV8BBCjJmOvogxa5tHPgD-p5bMUp2z_uzNoKNApHdsYBpmzirAHYXtgQUPGjfHbccaRxq9b8V815QJSuO4Vp-hwWh9s6V5hCYTx1p3VkUqbGeaVHLI3rSZAB2lAUUTKKSxx6m6IeLRV7l1pIX6lWTeArcUS4PLZRWlfQMu4DHKsX51y7EBKCnX9PYOjGWW0QInKCO4rAGF41O-62D7Lejqr_qyDfvPVQaZVkYmZKpP2PARuliY0tf0ShMUGdGWS2zkrYcAUNYV56JbTRyRHtNoctsgF22qSR9AWKwMbYs_wOojxPlpGNbcQK8CYL2fMp145QOizLcsmteRgpWanW9VvsBbK49t02nrQPcw_uhOL9WNX4SPmVEI0OTcbUZLYjJVXq6p65CvfCOBwPNwgck8FNWJVMIhrDRbZdScjIF29zKi4Iqj2jhTR0MH31vQI2XFeqH20Ux6DZ04QUwnuCHuXjwN7gPXJPOzdbXelqT3JqfykVic63L6lV4OuV9uHulfbJlUTqFVoGGA5Q71Z0Eh4UtHS3Z9LCGrYQ793gbpWovDNTlmAqquf4YUR7rCYeDKXiQtNsggneSgC6msuC4fTSlbSd1h0ue8P4GYo0p2FoQmIWJOCxvtnHb2-QW5YcsgUgtxWt8qphm2N3OTiZv52WIaYQI6BnI7iG4kJv6PX5bgZ30EEMvSRus2CScIVqRhDK2Msc4lZiMuyN5Vt_CA5aAcU-QxHyGIDfBOtrxirQ9PrAf1uhOg01gmBzPggrEMM1CTAUV90M4XJumJpxwjFsuZBF-bYvf52rurCao6qojOqAC98uMlz7e3i1J9f-yMyzosOxK3h4X_Q8GE-yByZErFTdlZIoYWQ9w2sGFhUdugROb2L7lvrTVTRMRSE1XcaySz
+      domain: super-carnival-q7rjvgp4q5r269gj-3245.app.github.dev
+      path: /
+      secure: true
+      extensions:
+        - Partitioned
+      hostOnly: true
+      creation: 2025-06-02T23:32:39.431Z
+      lastAccessed: 2025-06-03T00:12:08.353Z
+      sameSite: none
+      id: 37ff60a3-b3b5-49de-9a5d-a18bef6e8cbb
+    - key: .Tunnels.Relay.WebForwarding.Cookies
+      value: CfDJ8Cs4yarcs6pKkdu0hlKHsZsPy4aqXUu7k6axAfCQCetIDs8Epf_024s2Y4qh7DheGN1n8N8rBwtshO5YwiarqEZ8oji6bHFSenMmVLNyRtSDeXNec0cYsW5GRXUHlXV4nwHJll0j65ZwS2DkcvNFmdlCFlSKGN4EKpwxN4HlW8fkut4P5YJXViA7qvnHZ_ZZzA8b1UvYh60FpmoofeVjYODUo-RUpRPo510hHGLE-eC3lc_L9F1Z9lNc8aVJJmgOWcpu9Ytej8F1n2PQQ0F3B19qeSe-FUuIm9jCW0DjjSqcBGqgEvBW7SJWUE4PP2VlIHYdc3XQ3j3nsKsDhKgMi8t9XJUD83e-bCPeNrsalb_lrLJIRvT9iRQvhz7jDAzSrk8jKdqqSrAcWAaxZwNRiROqAn6UiEiIPEjPVOiSj_bqogwJ7KS8waWQ7uHFntNxrIS-BEb8hsKALlbGEUrCNRcAVm5zSqXVD896QThS-7VkFQWYjrFm0vLj4FzNFaWBFtQsgOSGV4gZ__ikCeAu9GRgUWjZNhU8-sQ1TN_ussfQQvz9hwpbWz5dSWypWOvuOHE5UANcxQ1PbcTgKXTUl6GGMTMxwW3Mwe0b6eEr1bRbnIWQIpUXMIMPf05U5RE4IWw5WSJzvAwy8Xofnf2-Sj8vYNiAGGMPDnZJ7qZqoRhOOjJNwvTlhvhRtm3sxYSZ1MxWWmPBJpBuX-4TiofSL37nFlyBNnFjRyiT5s8ZpzWao3nVW-9GmcWI-F2LvTFYdgCuDti6PQb3HcRmmkQDnrsthrfG-Es3udsyhbhXdGNSCxWocSPMFVxcFo-fdduzG7KPtGEauKo9yVHzFF0v3fVTmdUdmFWYlHNMA3l2rY3gybG0JJSNNXlKJTKk5dgZbNpvH2a4A70ugy-evYd_xd5I7dqwEOJttpjGg2Jqlv2VpHkKBl3vbGifSnO1jyAwQ6RtNlk6LL20-eBbNrLkJ0Qf6vvI2X_kvKA2iYXgMs6avvmFAeB4LBDm7lIZvJMs9A
+      domain: literate-doodle-pjw5xj6g595xf9746-3245.app.github.dev
+      path: /
+      secure: true
+      extensions:
+        - Partitioned
+      hostOnly: true
+      creation: 2025-06-03T00:19:05.712Z
+      lastAccessed: 2025-06-03T00:37:00.731Z
+      sameSite: none
+      id: b9af8db8-fba9-4a14-925e-8ede8e9fa481
+    - key: cs-search-params
+      domain: opulent-chainsaw-69wg6g5464wpfx69g.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-05T00:29:01.013Z
+      lastAccessed: 2025-06-05T00:31:30.180Z
+      id: 64539ccb-ef41-4a1e-8f84-ecda86ef3a0b
+    - key: _gh_sess
+      value: Im%2B4Vf3O89ehRSsxUphn0HnHa9rGnZVJHqIYfCP%2FQwWc1N2nDcrp5PPXrqTN4dXQZ4%2BQv5GS71xDAgQH7cgPkjbK7FieSThn9VeBe02xIULe9%2FsASnqE44dbPvaH1vS6KwX4XS3A%2FCKQ3IOu7ZglAcuaA%2BgrQD%2BHs3qMMvYiV6Z9PW94qE3jADeqJKO10mU7XE1QEDtiN5cVBtXiWr7ogvaqVuvg4nKhGY%2FBmb3CsjROfu3SfQHwwW43ap%2FAIpAbJtLMumGcihvStu16Qg1U4A%3D%3D--ZCMCW5RLkxRbVOpm--f%2Fr0uVNgoVA6gqNju0v82Q%3D%3D
+      domain: opulent-chainsaw-69wg6g5464wpfx69g.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-05T00:29:01.015Z
+      lastAccessed: 2025-06-05T00:31:30.180Z
+      sameSite: lax
+      id: e47dbf85-e80f-4387-a28b-57d1128cb012
+    - key: .Tunnels.Relay.WebForwarding.Cookies
+      value: CfDJ8Cs4yarcs6pKkdu0hlKHsZv4wOS_r2zMjd8nFj8Qs2ASVxjieK8bW9k4gRi-oaPe_W85PVPZZs1yI8bCPedWobnHPkrw3cIa0tC-1Xc-9P9Alx-pS_sOzhyLRU-UcgOgxIg90mFG7rAWfHbnAoWji6GWY5gjfULSSZvI7ywoN6Tsc9VuAfbGulLgHwbwc5QHSYhPsIn8n-KlPZook5JFllgxD_nihDBnykLB6vGD0sLyhjlll1Adg14QHWD6oL7dJPgLSno5AZPEEypjmQh8QliCgiI6cd5jHNwiuUJoLSHRAbUgsBWL51ycV6cvtUZOL6CypumWJsvx8z6VqLNa6ZdesIvqJFj58Gt5cYDdOQC3j7UPkn1Wdepz1Kx5W087uc-w2baPzXDo2TlhOjaRvFHh8R5C-5RPaI3kP2ysYwXZicfBcJ75pOXLAn7eK-YgrLt6C1g9cGRooB24ybDMJdhRzvYXQ70apWy36qhn6K5ekxm83-KcN38SdnGukCSuT_F5v2Zi5HbnBkJVb-mwKgdk3nzYRmJ3y8mAVff89HOwRqJWV72gyspiA3oDsg5k4RUK52RPwCX1d8JbRZwrXvi7UTcPpPp5caJJUzZ0V5eS9eAUDJZb5q4otIiOTkMUDgeqdPdxFgpNX0ZFZQb7KevT5WTucUi4HGJHsqG6tn95Kce099D0hT3IZ5byW7npVPbi_g6F0dczWz-hEEBe_fe0YJvVAMkeFNrFBjoAZ_3cRbMh-5fMakOzzv5YWHq4CzllOaErRlx7ImRrApmF-sSoUjrYg8WiU26kjuN9PmZA-elyTGK8m3TkHoVqwT96KjVS5RZiODBAz3fVtxxTOx2TAD2xwE4EepYotSClXKs7uU1v5CQid2f_42qpX71_h4zAYtUbteYAIB1wQXTN83FPCnaA96f3YJdR-6tc-MGqP50NfS462m3pJ5-29nxmrqzPBKdy1hExWdiaZOAiWVy_s9ICFmcRAt-fbyiMrG3o
+      domain: opulent-chainsaw-69wg6g5464wpfx69g-3000.app.github.dev
+      path: /
+      secure: true
+      extensions:
+        - Partitioned
+      hostOnly: true
+      creation: 2025-06-05T00:32:10.146Z
+      lastAccessed: 2025-06-11T22:25:52.843Z
+      sameSite: none
+      id: 81002986-405f-499a-a709-cf312b528af9
+    - key: cs-search-params
+      domain: studious-spork-g49jxw7rqv7fg69.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-05T02:54:40.261Z
+      lastAccessed: 2025-06-05T02:54:40.261Z
+      id: 13d5e343-8b8d-4383-b24e-618129474159
+    - key: _gh_sess
+      value: TCmGFOeFTa5LcKkhA36WuUfc4C6Yk5kt1RDEyFR8j9d%2BPJtenQXADTDgyISVzBTP9KtZK6wkuHLqgv1BLhJs%2Bi%2BGABhr8SHYVY2z5%2BMhk1D5Cm%2B%2BW64WD%2Fyy692dAUB8k670TOmdWCqNiykGuO1sh%2F5Nh%2BN%2F6HvIIIn4cFmEPp9CL7%2FiDJseU%2B7Uc%2Bf6FamP9EE9ZpToehCOlB8gAe0%2BoXkgv0b6mSs2Ww%2BAp2QZL5SuTGLDPz4o5rusFxgVKuvI3SgPE8AMs0YOapxrS4eTYg%3D%3D--H%2FNSQcEf9sIiAMo%2F--vYSS75E8PADzekWGk%2FOogw%3D%3D
+      domain: studious-spork-g49jxw7rqv7fg69.github.dev
+      path: /
+      secure: true
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-06-05T02:54:40.261Z
+      lastAccessed: 2025-06-05T02:54:40.261Z
+      sameSite: lax
+      id: faab7b86-f0bf-443e-ac39-afe77c7d5327
+    - key: .Tunnels.Relay.WebForwarding.Cookies
+      domain: legendary-fishstick-x5xw6wpv69q5cxv7-3000.app.github.dev
+      path: /
+      secure: true
+      extensions:
+        - Partitioned
+      hostOnly: true
+      creation: 2025-06-25T14:10:07.814Z
+      lastAccessed: 2025-06-26T14:35:54.206Z
+      sameSite: none
+      id: 22416c0d-36a6-406b-bcca-912609215da8
+    - key: .Tunnels.Relay.WebForwarding.Cookies
+      value: CfDJ8Cs4yarcs6pKkdu0hlKHsZv_nAuqD6MHTi9NunPWreslzFFqo9iSVy8nShFQQGNT9WSZ9CEOejUoW-9rmWPMsDfcqSJEoIHSFe_CAT7R0e3n6EUCL2p1Qc1pt8CHtlGL3yiXNM5Sei-059KlA5o1wEDo19HnpIl4tiXA6v7BLQ2m6Lze2xm0G2typjy4lXrzQtVtb2S7PhRySFXlJS6lp7h8OijWxaL2RGBFSKZwUSoBKVQAbPsULxtYt3XmYODe5Uc87zv2MbShRnpBup7A4sF1z4FxR1pNkfUcUgQWJ2kbci35xHH_Tt47aDhDUwlcHiZtvH4byjNtEt_51rTd1o6uY-HprhTAEr09hvOCP2vdgZ9m8MaQAR0Va0X87QRA24CWQ07E_F4WVXx8uKVVmQhfOjixcXHZ9_v--tjhTNZQLPZZiSoFrl5fhAzahxuUSkZlCe3sRMsmC_rNTILhpJiP8se0KD0iaU2vjG5Nyoh4jz_eEZLTFrlFogCbxym-Yc6qkQeDDjGH14j2MT6K3XmsWurvDz-GyuV16vOoSRa5dZapsuQH4nYffsKUaygt-JyQo9vvr-oZmqxDxYd2gFNWQu0MSgWJ6aQDUnPILHBDiZRqipDYmRvpa9pJvj_kQiUMWVq8y67NLWMk3B-Yv8BLafYvBwDYmRcbYrkCVlvh28Y9Ub36l7f8eRg-EBrOknY388ot5CTYYUc4hvXbDhssp4I9FjcqCLBySreotr-6W_XaXi2pn5M1_XUCc1b5NkS4ZhrobADHBLsRTrK6Env1kyRhonUzGKBA14Nn0lupBxtmNUMPbMNXevovJ7bsjLTgTXpt_6adBWnNTQ-fCO14XAICr58JU9L98wAjtJBfunx2zmoECCrXtpkb6WMg15gbBTmN6is0_RqNT175Z2r8SPwVj7MvcN0OTVz8CPY2JtwsiqDKhBwCvbBqW9xRDASAUONLOm0NAoySAXI2oSH7_GWoYIV3LxRnMkAs5mYb
+      domain: orange-space-fishstick-jj95657q6gg93jj5-3000.app.github.dev
+      path: /
+      secure: true
+      extensions:
+        - Partitioned
+      hostOnly: true
+      creation: 2025-06-26T14:36:37.442Z
+      lastAccessed: 2025-06-27T16:48:01.484Z
+      sameSite: none
+      id: 522a11b1-c060-4e8d-8871-8dfb3574fc43
+environments:
+  name: Base Environment
+  meta:
+    id: env_8cd98710fc2e13c066f0c56e69342ab30bbd9940
+    created: 1748906976814
+    modified: 1750948589332
+    isPrivate: false
+  data:
+    url_todos: https://studious-spork-g49jxw7rqv7fg69.github.dev
+    url_starwars: https://orange-space-fishstick-jj95657q6gg93jj5-3000.app.github.dev
